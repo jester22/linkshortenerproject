@@ -7,6 +7,7 @@ import {
   Show,
   UserButton,
 } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 import { Button } from "@/components/ui/button";
 import "./globals.css";
 
@@ -36,7 +37,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-950 text-white`}
       >
-        <ClerkProvider>
+        <ClerkProvider appearance={{ baseTheme: dark }}>
           <header className="flex items-center justify-between px-6 py-4 bg-slate-950 border-b border-slate-800">
             <h1 className="text-2xl font-bold text-white">Link Shortener</h1>
             <div className="flex gap-4">
