@@ -50,6 +50,15 @@ Before generating, suggesting, or modifying **any code**, you MUST read the rele
 - [PROJECT_OVERVIEW.md](./docs/PROJECT_OVERVIEW.md) - Project structure and architecture
 - [BEST_PRACTICES.md](./docs/BEST_PRACTICES.md) - Performance, security, and optimization
 
+## 🚨 NEVER Use `middleware.ts`
+
+> **`middleware.ts` is deprecated in Next.js 16 and later versions (including the version used in this project).** 
+> This project uses **`proxy.ts`** instead. NEVER create, suggest, or reference a `middleware.ts` file.
+
+- All route protection, redirects, and request interception logic belongs in **`proxy.ts`** at the project root.
+- If you encounter any documentation, tutorial, or AI-generated code that uses `middleware.ts`, **do not follow it** — adapt the logic to `proxy.ts` instead.
+- The existing `proxy.ts` already handles Clerk authentication and route matching. Extend it there when needed.
+
 ## Core Principles
 
 ### 1. **Strict Type Safety**
@@ -120,7 +129,7 @@ npm run build
 2. Remember: Clerk is the ONLY authentication method allowed
 3. Use `mode="modal"` for all sign-in and sign-up buttons
 4. Protect `/dashboard` route - must require login
-5. Redirect logged-in users from homepage to `/dashboard` (handled in middleware)
+5. Redirect logged-in users from homepage to `/dashboard` (handled in `proxy.ts` — **NOT** `middleware.ts`)
 6. Add Clerk auth check to route/component
 7. Return 401 for unauthenticated users
 8. Verify user ownership before returning data
