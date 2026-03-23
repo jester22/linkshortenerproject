@@ -67,3 +67,17 @@ export async function deleteLink(
     .returning();
   return deleted;
 }
+
+/**
+ * Fetches a link by its slug.
+ *
+ * @param slug - The unique slug identifier
+ * @returns The matching link, or undefined if not found
+ */
+export async function getLinkBySlug(slug: string): Promise<Link | undefined> {
+  const [link] = await db
+    .select()
+    .from(links)
+    .where(eq(links.slug, slug));
+  return link;
+}
