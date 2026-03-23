@@ -1,3 +1,6 @@
+---
+description: Read this file for all instructions related to authentication in the Link Shortener Project.
+---
 # Authentication Guidelines
 
 ## ⚠️ Critical Rules

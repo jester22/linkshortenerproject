@@ -27,28 +27,8 @@ linkshortenerproject/
 ├── components/            # React components (UI + feature)
 ├── db/                    # Database schema & config
 ├── lib/                   # Utilities and helpers
-├── docs/                  # Agent instruction files
 └── public/                # Static assets
 ```
-
-## Detailed Documentation
-
-Each aspect of development is documented in separate files in the `/docs` directory. **Always reference the relevant documentation** before implementing features or making changes.
-
-## 🚨 Non-Negotiable Rule: Read Docs First
-
-Before generating, suggesting, or modifying **any code**, you MUST read the relevant individual instruction files in `/docs` for the task at hand.
-
-- This is mandatory and has top priority over implementation speed.
-- Do not write code first and check docs later.
-- If multiple docs are relevant (for example auth + UI + best practices), read all relevant files before coding.
-- If no relevant `/docs` file has been reviewed yet, stop and review it first.
-
-- [UI-COMPONENTS.md](./docs/UI-COMPONENTS.md) - shadcn/ui component guidelines and best practices
-- [AUTHENTICATION.md](./docs/AUTHENTICATION.md) - Authentication and protected routes
-- [CODE_STYLE.md](./docs/CODE_STYLE.md) - Naming conventions and code formatting
-- [PROJECT_OVERVIEW.md](./docs/PROJECT_OVERVIEW.md) - Project structure and architecture
-- [BEST_PRACTICES.md](./docs/BEST_PRACTICES.md) - Performance, security, and optimization
 
 ## 🚨 NEVER Use `middleware.ts`
 
@@ -97,16 +77,6 @@ Before generating, suggesting, or modifying **any code**, you MUST read the rele
 - Ensure keyboard navigation works
 - Test with screen readers
 
-## Before You Start
-
-### Checklist
-- [ ] BEFORE WRITING ANY CODE: Read all relevant instruction files in `/docs` for this specific task
-- [ ] Read [PROJECT_OVERVIEW.md](./docs/PROJECT_OVERVIEW.md) to understand the project
-- [ ] Review [CODE_STYLE.md](./docs/CODE_STYLE.md) for naming and formatting rules
-- [ ] Review [UI-COMPONENTS.md](./docs/UI-COMPONENTS.md) for component usage (shadcn/ui)
-- [ ] Identify which documentation file(s) are relevant to your task
-- [ ] Ensure TypeScript strict mode passes before committing
-
 ### Environment Setup
 ```bash
 # Install dependencies
@@ -125,7 +95,6 @@ npm run build
 ## Common Tasks
 
 ### Implementing Protected Routes
-1. Read: [AUTHENTICATION.md](./docs/AUTHENTICATION.md) - **This is critical - review the ⚠️ Critical Rules section**
 2. Remember: Clerk is the ONLY authentication method allowed
 3. Use `mode="modal"` for all sign-in and sign-up buttons
 4. Protect `/dashboard` route - must require login
@@ -149,15 +118,6 @@ Before submitting code for review, ensure:
 - [ ] **Performance**: Database queries optimized, no N+1 queries
 - [ ] **Responsiveness**: Works on mobile and desktop
 - [ ] **Dark Mode**: Includes `dark:` prefixes where relevant
-
-## When You Get Stuck
-
-1. **Check the documentation** in `/docs` for your specific task
-2. **Search for similar patterns** in existing code
-3. **Type error?** Read the error carefully - TypeScript is usually right
-4. **Performance issue?** Check [BEST_PRACTICES.md](./docs/BEST_PRACTICES.md#performance)
-5. **Security concern?** Read [BEST_PRACTICES.md](./docs/BEST_PRACTICES.md#security)
-6. **Design question?** Review existing components/patterns
 
 ## Examples
 
