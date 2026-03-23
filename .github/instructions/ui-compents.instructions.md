@@ -1,5 +1,5 @@
 ---
-description: "UI Components & shadcn/ui Guidelines"
+description: Read this creating or modifying UI components in the Link Shortener Project.
 ---
 
 # 🎨 UI Components Guidelines
