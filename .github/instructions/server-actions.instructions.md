@@ -1,6 +1,7 @@
 ---
 description: Read this file for all instructions related to server actions and data mutations in the Link Shortener Project.
 ---
+
 # Server Actions Guidelines
 
 ## Core Rules

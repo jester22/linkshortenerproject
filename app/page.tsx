@@ -1,6 +1,6 @@
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
-import { BarChart3, Link2, Pencil, Share2, Shield, Zap } from "lucide-react";
+import { Link2, Pencil, Share2, Shield, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const features = [
@@ -9,12 +9,6 @@ const features = [
     title: "URL Shortening",
     description:
       "Transform long, unwieldy URLs into clean, concise links in seconds.",
-  },
-  {
-    icon: BarChart3,
-    title: "Click Analytics",
-    description:
-      "Track how many times your links are clicked and gain insights into your audience.",
   },
   {
     icon: Pencil,
@@ -55,8 +49,9 @@ const steps = [
   },
   {
     number: "03",
-    title: "Share & Track",
-    description: "Share your link and monitor click analytics in real time.",
+    title: "Share & Go",
+    description:
+      "Share your link anywhere — your audience gets there instantly.",
   },
 ] as const;
 
@@ -84,8 +79,8 @@ export default async function Home(): Promise<React.ReactNode> {
             </span>
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            Transform long, complex URLs into short, memorable links. Track
-            clicks, manage links, and share with confidence.
+            Transform long, complex URLs into short, memorable links. Manage
+            your links and share with confidence.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <SignUpButton mode="modal">
@@ -175,7 +170,7 @@ export default async function Home(): Promise<React.ReactNode> {
             Ready to Get Started?
           </h2>
           <p className="text-gray-400 text-lg">
-            Join thousands of users shortening and tracking their links today.
+            Join thousands of users shortening and sharing their links today.
           </p>
           <SignUpButton mode="modal">
             <Button className="px-8 py-3 h-auto text-base font-semibold">

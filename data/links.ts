@@ -23,7 +23,7 @@ export async function getLinksByUserId(userId: string): Promise<Link[]> {
  * @returns The newly created link
  */
 export async function createLink(
-  data: Pick<NewLink, "url" | "slug" | "userId">
+  data: Pick<NewLink, "url" | "slug" | "userId">,
 ): Promise<Link> {
   const [link] = await db.insert(links).values(data).returning();
   return link;
@@ -40,7 +40,7 @@ export async function createLink(
 export async function updateLink(
   id: number,
   userId: string,
-  data: Pick<NewLink, "url" | "slug">
+  data: Pick<NewLink, "url" | "slug">,
 ): Promise<Link | undefined> {
   const [updated] = await db
     .update(links)
@@ -59,7 +59,7 @@ export async function updateLink(
  */
 export async function deleteLink(
   id: number,
-  userId: string
+  userId: string,
 ): Promise<Link | undefined> {
   const [deleted] = await db
     .delete(links)
@@ -75,9 +75,6 @@ export async function deleteLink(
  * @returns The matching link, or undefined if not found
  */
 export async function getLinkBySlug(slug: string): Promise<Link | undefined> {
-  const [link] = await db
-    .select()
-    .from(links)
-    .where(eq(links.slug, slug));
+  const [link] = await db.select().from(links).where(eq(links.slug, slug));
   return link;
 }
