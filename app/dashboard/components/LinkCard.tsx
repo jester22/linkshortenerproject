@@ -38,7 +38,16 @@ export function LinkCard({ link }: LinkCardProps): React.ReactNode {
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0 flex-1">
               <CardTitle className="text-white">{link.slug}</CardTitle>
-              <CardDescription className="truncate">{link.url}</CardDescription>
+              <CardDescription className="truncate">
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  {link.url}
+                </a>
+              </CardDescription>
             </div>
             <div className="flex gap-1 shrink-0">
               <Button

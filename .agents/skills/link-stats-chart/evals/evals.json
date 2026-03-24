@@ -1,0 +1,43 @@
+{
+  "skill_name": "link-stats-chart",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to see how many links were created each month for the past year. Can you generate a chart?",
+      "expected_output": "A PNG bar chart saved to ./reports/links-per-month.png showing 12 months of link creation data with labeled bars, month labels on x-axis, and link counts on y-axis.",
+      "files": [],
+      "expectations": [
+        "The script installs required Python packages (psycopg2-binary, matplotlib, python-dotenv)",
+        "The script is executed from the skill's scripts/ directory",
+        "A PNG file is created at ./reports/links-per-month.png",
+        "The chart has 12 bars (one per month)",
+        "The x-axis shows month labels",
+        "The y-axis shows link counts"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Generate a link creation stats chart and save it to ./analytics/monthly-links.png",
+      "expected_output": "A PNG bar chart saved to ./analytics/monthly-links.png (custom path) showing 12 months of data.",
+      "files": [],
+      "expectations": [
+        "The --output flag is used to specify ./analytics/monthly-links.png",
+        "A PNG file is created at the custom path ./analytics/monthly-links.png",
+        "The analytics/ directory is created if it doesn't exist",
+        "The chart content is the same as the default (12 months, labeled bars)"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Show me the monthly link trends from the database as a bar chart image",
+      "expected_output": "A PNG bar chart saved to the default location showing monthly link creation trends for the past 12 months.",
+      "files": [],
+      "expectations": [
+        "The skill is triggered even though the user didn't say 'generate_chart.py' or 'link-stats-chart'",
+        "The script runs successfully and produces a PNG",
+        "The chart title references 'Links Created Per Month'",
+        "All 12 months are represented on the x-axis even if some have zero links"
+      ]
+    }
+  ]
+}

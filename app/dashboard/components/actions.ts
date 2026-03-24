@@ -6,7 +6,13 @@ import { revalidatePath } from "next/cache";
 import { createLink, updateLink, deleteLink } from "@/data/links";
 
 const CreateLinkSchema = z.object({
-  url: z.string().url("Please enter a valid URL"),
+  url: z
+    .string()
+    .url("Please enter a valid URL")
+    .refine(
+      (url) => /^https?:\/\//i.test(url),
+      "URL must use http:// or https:// protocol",
+    ),
   slug: z
     .string()
     .min(3, "Slug must be at least 3 characters")
@@ -56,7 +62,13 @@ export async function createLinkAction(
 
 const UpdateLinkSchema = z.object({
   id: z.number().int().positive(),
-  url: z.string().url("Please enter a valid URL"),
+  url: z
+    .string()
+    .url("Please enter a valid URL")
+    .refine(
+      (url) => /^https?:\/\//i.test(url),
+      "URL must use http:// or https:// protocol",
+    ),
   slug: z
     .string()
     .min(3, "Slug must be at least 3 characters")
