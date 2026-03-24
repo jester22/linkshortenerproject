@@ -13,6 +13,7 @@ The project is a modern URL shortening service built with **Next.js 16**, **Reac
 ## Quick Reference
 
 ### Technology Stack
+
 - **Frontend**: Next.js 16.1.7 (App Router), React 19, Tailwind CSS 4, shadcn/ui
 - **Backend**: Node.js, Next.js API Routes, Server Components/Actions
 - **Database**: PostgreSQL (Neon serverless) with Drizzle ORM
@@ -21,6 +22,7 @@ The project is a modern URL shortening service built with **Next.js 16**, **Reac
 - **Code Quality**: ESLint 9
 
 ### Project Structure
+
 ```
 linkshortenerproject/
 ├── app/                   # Next.js App Router
@@ -32,7 +34,7 @@ linkshortenerproject/
 
 ## 🚨 NEVER Use `middleware.ts`
 
-> **`middleware.ts` is deprecated in Next.js 16 and later versions (including the version used in this project).** 
+> **`middleware.ts` is deprecated in Next.js 16 and later versions (including the version used in this project).**
 > This project uses **`proxy.ts`** instead. NEVER create, suggest, or reference a `middleware.ts` file.
 
 - All route protection, redirects, and request interception logic belongs in **`proxy.ts`** at the project root.
@@ -42,42 +44,49 @@ linkshortenerproject/
 ## Core Principles
 
 ### 1. **Strict Type Safety**
+
 - Use TypeScript with strict mode enabled
 - No `any` types - use proper types or `unknown` with guards
 - Always annotate function signatures
 - Leverage type inference where appropriate
 
 ### 2. **Code Clarity**
+
 - Write readable, self-documenting code
 - Use descriptive variable and function names
 - Extract complex logic into well-named functions
 - Add JSDoc comments for exported functions
 
 ### 3. **Consistency**
+
 - Follow the naming conventions defined in CODE_STYLE.md
 - Use the established patterns for components, routes, and queries
 - Maintain consistent code formatting (ESLint)
 - Use provided utilities (`cn()`, etc.) for common tasks
 
 ### 4. **Security First**
+
 - Always validate user input (client and server)
 - Verify user ownership before returning/modifying data
 - Never hardcode secrets or sensitive data
 - Use environment variables for configuration
 
 ### 5. **Performance**
+
 - Optimize database queries (limit columns, use pagination)
 - Implement code splitting for large features
 - Use `React.memo()` and `useCallback()` judiciously
 - Cache data appropriately
 
 ### 6. **Accessibility**
+
 - Use semantic HTML elements
 - Include ARIA labels for interactive elements
 - Ensure keyboard navigation works
 - Test with screen readers
 
 ### Environment Setup
+
 ```bash
 # Install dependencies
 npm install
@@ -95,6 +104,7 @@ npm run build
 ## Common Tasks
 
 ### Implementing Protected Routes
+
 2. Remember: Clerk is the ONLY authentication method allowed
 3. Use `mode="modal"` for all sign-in and sign-up buttons
 4. Protect `/dashboard` route - must require login
@@ -122,6 +132,7 @@ Before submitting code for review, ensure:
 ## Examples
 
 ### ✅ Good Example - Component with Props
+
 ```typescript
 // components/LinkCard.tsx
 import { Button } from "@/components/ui/button";
@@ -154,6 +165,7 @@ export function LinkCard({ link, onDelete }: LinkCardProps): JSX.Element {
 ```
 
 ### ✅ Good Example - API Route
+
 ```typescript
 // app/api/links/[id]/route.ts
 import { auth } from "@clerk/nextjs/server";
@@ -169,25 +181,16 @@ export async function DELETE(
   const { userId } = await auth();
 
   if (!userId) {
-    return NextResponse.json(
-      { error: "Unauthorized" },
-      { status: 401 },
-    );
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const linkId = parseInt(params.id, 10);
 
   // Verify ownership
-  const existing = await db
-    .select()
-    .from(links)
-    .where(eq(links.id, linkId));
+  const existing = await db.select().from(links).where(eq(links.id, linkId));
 
   if (!existing[0] || existing[0].userId !== userId) {
-    return NextResponse.json(
-      { error: "Forbidden" },
-      { status: 403 },
-    );
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
   await db.delete(links).where(eq(links.id, linkId));
@@ -199,6 +202,7 @@ export async function DELETE(
 ## Maintenance & Updates
 
 This instruction set should be kept up-to-date as the project evolves. When:
+
 - **Adding new patterns**: Add to relevant documentation file
 - **Changing conventions**: Update CODE_STYLE.md and notify team
 - **Discovering gotchas**: Add to BEST_PRACTICES.md

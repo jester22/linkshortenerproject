@@ -39,7 +39,14 @@ export function LinkCard({ link }: LinkCardProps): React.ReactNode {
             <div className="min-w-0 flex-1">
               <CardTitle className="text-white">{link.slug}</CardTitle>
               <CardDescription className="truncate">
-                {link.url}
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  {link.url}
+                </a>
               </CardDescription>
             </div>
             <div className="flex gap-1 shrink-0">
@@ -69,11 +76,7 @@ export function LinkCard({ link }: LinkCardProps): React.ReactNode {
         </CardContent>
       </Card>
 
-      <EditLinkDialog
-        open={editOpen}
-        onOpenChange={setEditOpen}
-        link={link}
-      />
+      <EditLinkDialog open={editOpen} onOpenChange={setEditOpen} link={link} />
 
       <DeleteLinkDialog
         open={deleteOpen}

@@ -1,18 +1,22 @@
 ---
 description: Read this file for all instructions related to authentication in the Link Shortener Project.
 ---
+
 # Authentication Guidelines
 
 ## ⚠️ Critical Rules
 
 ### Single Authentication Provider
+
 **Clerk is the ONLY authentication method used in this application.** No other auth solutions (Auth0, NextAuth, custom implementations, etc.) should be introduced. All authentication must go through Clerk.
 
 ### Protected Routes
+
 - **`/dashboard`** - Must require user to be logged in. Redirect to sign-in if not authenticated.
 - **Homepage (`/`)** - If a logged-in user accesses the homepage, they should be redirected to `/dashboard`.
 
 ### Sign In & Sign Up UI
+
 - Clerk `SignInButton`, `SignUpButton`, and related components **must always use `mode="modal"`**
 - This ensures sign-in/up opens as a modal overlay, not a separate page
 - Full-page sign-in/up pages should only be created for error states or accessibility fallbacks
@@ -20,13 +24,16 @@ description: Read this file for all instructions related to authentication in th
 ## Clerk Setup
 
 ### Environment Variables
+
 Required `.env` file variables:
+
 ```
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_publishable_key
 CLERK_SECRET_KEY=your_secret_key
 ```
 
 ### Root Layout Configuration
+
 ```typescript
 // app/layout.tsx
 import { ClerkProvider } from "@clerk/nextjs";
@@ -61,10 +68,7 @@ export async function GET(request: NextRequest) {
   const { userId, sessionId } = await auth();
 
   if (!userId) {
-    return NextResponse.json(
-      { error: "Unauthorized" },
-      { status: 401 },
-    );
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   // userId is guaranteed to exist
@@ -387,6 +391,7 @@ export async function POST(req: NextRequest) {
 ## Best Practices
 
 ### Security
+
 - Always verify `userId` before performing user-specific operations
 - Use `await auth()` in server-side code to ensure auth is complete
 - Validate that data belongs to the authenticated user before returning it
@@ -398,10 +403,7 @@ export async function deleteLink(
   linkId: number,
   userId: string,
 ): Promise<boolean> {
-  const link = await db
-    .select()
-    .from(links)
-    .where(eq(links.id, linkId));
+  const link = await db.select().from(links).where(eq(links.id, linkId));
 
   if (!link[0] || link[0].userId !== userId) {
     throw new Error("Unauthorized");
@@ -419,6 +421,7 @@ export async function deleteLink(linkId: number): Promise<boolean> {
 ```
 
 ### Error Handling
+
 - Return consistent error messages
 - Use appropriate HTTP status codes
 - Log errors for debugging
@@ -426,16 +429,10 @@ export async function deleteLink(linkId: number): Promise<boolean> {
 ```typescript
 // ✅ Good error handling
 if (!userId) {
-  return NextResponse.json(
-    { error: "Unauthorized" },
-    { status: 401 },
-  );
+  return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 }
 
 if (!link) {
-  return NextResponse.json(
-    { error: "Link not found" },
-    { status: 404 },
-  );
+  return NextResponse.json({ error: "Link not found" }, { status: 404 });
 }
 ```

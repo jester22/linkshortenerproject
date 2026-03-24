@@ -6,14 +6,20 @@ import { revalidatePath } from "next/cache";
 import { createLink, updateLink, deleteLink } from "@/data/links";
 
 const CreateLinkSchema = z.object({
-  url: z.string().url("Please enter a valid URL"),
+  url: z
+    .string()
+    .url("Please enter a valid URL")
+    .refine(
+      (url) => /^https?:\/\//i.test(url),
+      "URL must use http:// or https:// protocol",
+    ),
   slug: z
     .string()
     .min(3, "Slug must be at least 3 characters")
     .max(50, "Slug must be at most 50 characters")
     .regex(
       /^[a-zA-Z0-9-]+$/,
-      "Slug can only contain letters, numbers, and hyphens"
+      "Slug can only contain letters, numbers, and hyphens",
     ),
 });
 
@@ -26,7 +32,7 @@ type CreateLinkInput = z.infer<typeof CreateLinkSchema>;
  * @returns Object with either `data` (the created link) or `error` (validation/auth error)
  */
 export async function createLinkAction(
-  input: CreateLinkInput
+  input: CreateLinkInput,
 ): Promise<{ data?: { id: number; slug: string }; error?: string }> {
   const { userId } = await auth();
 
@@ -48,20 +54,28 @@ export async function createLinkAction(
     revalidatePath("/dashboard");
     return { data: { id: link.id, slug: link.slug } };
   } catch {
-    return { error: "A link with this slug already exists. Please choose another." };
+    return {
+      error: "A link with this slug already exists. Please choose another.",
+    };
   }
 }
 
 const UpdateLinkSchema = z.object({
   id: z.number().int().positive(),
-  url: z.string().url("Please enter a valid URL"),
+  url: z
+    .string()
+    .url("Please enter a valid URL")
+    .refine(
+      (url) => /^https?:\/\//i.test(url),
+      "URL must use http:// or https:// protocol",
+    ),
   slug: z
     .string()
     .min(3, "Slug must be at least 3 characters")
     .max(50, "Slug must be at most 50 characters")
     .regex(
       /^[a-zA-Z0-9-]+$/,
-      "Slug can only contain letters, numbers, and hyphens"
+      "Slug can only contain letters, numbers, and hyphens",
     ),
 });
 
@@ -74,7 +88,7 @@ type UpdateLinkInput = z.infer<typeof UpdateLinkSchema>;
  * @returns Object with either `data` (success flag) or `error`
  */
 export async function updateLinkAction(
-  input: UpdateLinkInput
+  input: UpdateLinkInput,
 ): Promise<{ data?: { id: number; slug: string }; error?: string }> {
   const { userId } = await auth();
 
@@ -98,13 +112,17 @@ export async function updateLinkAction(
     });
 
     if (!updated) {
-      return { error: "Link not found or you do not have permission to edit it." };
+      return {
+        error: "Link not found or you do not have permission to edit it.",
+      };
     }
 
     revalidatePath("/dashboard");
     return { data: { id: updated.id, slug: updated.slug } };
   } catch {
-    return { error: "A link with this slug already exists. Please choose another." };
+    return {
+      error: "A link with this slug already exists. Please choose another.",
+    };
   }
 }
 
@@ -121,7 +139,7 @@ type DeleteLinkInput = z.infer<typeof DeleteLinkSchema>;
  * @returns Object with either `data` (success flag) or `error`
  */
 export async function deleteLinkAction(
-  input: DeleteLinkInput
+  input: DeleteLinkInput,
 ): Promise<{ data?: { success: boolean }; error?: string }> {
   const { userId } = await auth();
 
@@ -139,7 +157,9 @@ export async function deleteLinkAction(
     const deleted = await deleteLink(parsed.data.id, userId);
 
     if (!deleted) {
-      return { error: "Link not found or you do not have permission to delete it." };
+      return {
+        error: "Link not found or you do not have permission to delete it.",
+      };
     }
 
     revalidatePath("/dashboard");
